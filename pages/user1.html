@@ -1,0 +1,197 @@
+<div id="user">
+	<button class="addBtn btn btn-sm btn-success">新 增</button>
+	<div class="row marginTop">
+		<!-- 缩略图 -->
+
+		</div> -->
+		<div class="modal" id="">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header text-center">
+						<div class="backDiv">
+							<i class="iconfont icon-zuo"></i>
+							<span>返回</span>
+						</div>
+						<div class="modal-title">添加用户</div>
+					</div>
+					<div class="modal-body">
+						<form class="form">
+							<div class="form-group">
+								<label for="">用户名</label>
+								<input type="text" name="username" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="">密码</label>
+								<input type="password" name="password1" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="">确认密码</label>
+								<input type="password" name="password2" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="">真实姓名</label>
+								<input type="text" name="nickname" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="">邮箱</label>
+								<input type="email" name="email" class="form-control">
+							</div>
+							<div class="form-group">
+								<button class="hide" type="reset">重置</button>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<span class="messageSpan"></span>
+						<button class="saveBtn btn btn-sm btn-success">确 认</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$(function(){
+		// 设置modal-content宽度
+		$('.modal-content').height($(window).height());
+		// 新增
+		$('.addBtn').click(function(){
+			// 清空表单数据
+			$('button[type=reset]').trigger('click');// 模拟触发
+			// 清空messageSpan
+			$('.messageSpan').html('');
+			// 显示
+			$('#').show();
+		});
+		// 返回
+		$('.backDiv').click(function(){
+			$('#').hide();
+		});
+		// 确认提交
+		$('.saveBtn').click(function(){
+			var username = $('input[name=username]').val();
+			var password1 = $('input[name=password1]').val();
+			var password2 = $('input[name=password2]').val();
+			var nickname = $('input[name=nickname]').val();
+			var email = $('input[name=email]').val();
+			var message = '';
+			if(username&&nickname&&password1&&password2&&email){
+				if(password1==password2){
+					// 提交
+					var obj = {
+						username:username,
+						password:password1,
+						nickname:nickname,
+						email:email
+					};
+					$.post(baseURL+'/manager/user/saveOrUpdateUser',obj,function(res){
+						console.log('保存成功');
+					});
+					// 刷新页面
+					loadData();
+					// 提示保存成功
+
+					// 关闭模态框
+					$('#').hide();
+				}else{
+					message='两次密码不一致';
+				}
+			}else{
+				message='信息不完整';
+			}
+			$('.messageSpan').html(message);
+		});
+		// 复选按钮初始化，设置false值
+		// $('#user input[type=checkbox]').bootstrapSwitch('state',false);
+		$('#user').on({
+			'switchChange.bootstrapSwitch':function(event,state){
+				// alert(state);
+				var id = $(this).closest('.switch').prev('input').val();
+				var obj = {
+					id:id,
+					status:state
+				};
+				$.post(baseURL+'/manager/user/changeStatus',obj,function(res){
+					console.log(res,'执行成功');
+				})
+			}
+		},'[type=checkbox]');
+		loadData();
+		// 获取数据  v
+		function loadData(){
+			$('.marginTop').empty();
+			$.get(baseURL+'/manager/user/findAllUser',function(res){
+				console.log(res.data,'操作成功');
+				// 遍历数据 循环创建缩略图
+				res.data.forEach(function(item,index){
+					var $thm = $(`<div class="col-sm-4">
+					    <div class="thumbnail">
+						    <img class="img-circle" src="`+(item.userface?item.userface:'http://bpic.588ku.com/element_origin_min_pic/01/55/09/6357474dbf2409c.jpg')+`" style="width: 150px;height: 150px;" alt="图片找不到了"/>
+						    <div class="caption">
+						        <div class="row">
+						        	<div class="col-sm-4 col-sm-offset-1">用户名</div>
+						        	<div class="col-sm-7">`+(item.username?item.username:'-')+`</div>
+						        </div>
+						        <div class="row">
+						        	<div class="col-sm-4 col-sm-offset-1">真实姓名</div>
+						        	<div class="col-sm-7">`+(item.nickname?item.nickname:'-')+`</div>
+						        </div>
+						        <div class="row">
+						        	<div class="col-sm-4 col-sm-offset-1">注册时间</div>
+						        	<div class="col-sm-7">`+(item.regTime?item.regTime:'-')+`</div>
+						        </div>
+						        <div class="row">
+						        	<div class="col-sm-4 col-sm-offset-1">email</div>
+						        	<div class="col-sm-7">`+(item.email?item.email:'-')+`</div>
+						        </div>
+						        <div class="row">
+						        	<div class="col-sm-4 col-sm-offset-1">状态</div>
+						        	<div class="col-sm-7">
+						        		<input type="hidden" value="`+item.id+`">
+						        		<div class="switch">
+						        			<input type="checkbox"/>
+						        		</div>
+						        	</div>
+						        </div>
+							</div>
+					  	</div>
+					</div>`);
+					// 追加节点
+					$('.marginTop').append($thm);
+					// 控制节点
+					$('#user input[type=checkbox]:last').bootstrapSwitch('state',item.enabled);
+				});
+			});
+		};
+	});
+</script>
+<style>
+	.marginTop{
+		margin-top: 10px;
+	}
+	#user{
+		width: 98%;
+		margin: 0 auto;
+	}
+	.thumbnail{
+		box-shadow: 3px 3px 3px #ccc;
+		font-size: 20px;
+		line-height: 36px;
+	}
+	.backDiv{
+		cursor: pointer;
+		float: left;
+	}
+	.messageSpan{
+		color: red;
+	}
+	#{
+		/*设置背景*/
+		background-color: rgba(0,0,0,0.5);
+	}
+	.modal-dialog{
+		width: 400px;
+		/*margin-top: 0;
+		margin-right: 0;*/
+	}
+</style>

@@ -1,0 +1,360 @@
+<div id="home">
+	<!-- 开始布局 -->
+	<div class="outerDiv">
+ 		<div class="row">
+ 			<div class="col-sm-3">
+ 				<div class="totalDiv bg-white">
+ 					<div class="iconDiv bg-green">
+ 						<!-- 图标 -->
+ 						<i class="iconfont icon-yun1"></i>
+ 					</div>
+ 					<div class="numDiv">
+ 						<span>99.9%</span>
+ 						<small>SEVER UPTIME</small>
+ 					</div>
+ 				</div>
+ 				<div class="totalDiv bg-white">
+ 					<div class="iconDiv bg-7E2DBF">
+ 						<!-- 图标 -->
+ 						<i class="iconfont icon-ai-user"></i>
+ 					</div>
+ 					<div class="numDiv">
+ 						<span>117K</span>
+ 						<small>USERS TOTAL</small>
+ 					</div>
+ 				</div>
+ 				<div class="totalDiv bg-white">
+ 					<div class="iconDiv bg-39BBE4">
+ 						<!-- 图标 -->
+ 						<i class="iconfont icon-18"></i>
+ 					</div>
+ 					<div class="numDiv">
+ 						<span>2470</span>
+ 						<small>NEW DAILY PHOTOS</small>
+ 					</div>
+ 				</div>
+ 			</div>
+ 			<div class="col-sm-6">
+ 				<!-- 图标和文字 -->
+ 				<div class="visDiv">
+ 					<div id="visContainer"></div>
+ 					<div class="numDiv">
+ 						<span>14.85%</span>
+ 						<small>More visitors</small>
+ 					</div>
+ 				</div>
+ 			</div>
+ 			<div class="col-sm-3">
+ 				<div class="uptimeDiv">
+ 					<div id="uptimeContainer"></div>
+ 					<div class="numDiv">
+ 						<span>98.15%</span>
+ 						<small>More visitors</small>
+ 					</div>
+ 				</div>
+ 				<div class="salesDiv">
+ 					<div id="salesContainer"></div>
+ 					<div class="numDiv">
+ 						<span>32045</span>
+ 						<small>More visitors</small>
+ 					</div>
+ 				</div>
+ 			</div>
+ 		</div>
+ 	</div>
+</div>
+<script>
+	$(function(){
+		// 画图
+		drawVis();
+		drawUptime();
+		drawSales();
+		//变量提升  所有的函数和变量的声明都会提前到代码第一行，并且变量提升在函数之前
+/*			var a;
+			function a(){}*/
+		//	console.log(a);
+		//  var a = 1;
+		//  function a(){}
+		//  console.log(a);
+
+		function drawVis(){
+ 			var chart = Highcharts.chart('visContainer',{
+	 			// 设置图表到区域的外边距
+	 			colors:['#63B919','#ccc'],
+				chart: {
+	 				margin: [5,5,5,5],
+					type: 'spline'
+				},
+				// 图表标题
+				title: {
+					text: null
+				},
+				// 隐藏x轴坐标
+				xAxis: {
+					type: 'datetime',
+					visible:false,
+					title: {
+						text: null
+					}
+				},
+				yAxis: {
+					// 隐藏y轴坐标
+					visible:false,
+					// 坐标轴的title
+					title: {
+						text: null
+					},
+					// 坐标轴的最小值
+					min: 0
+				},
+				// 	数据提示框：鼠标悬停在某点上时，以框的形式提示该点的数据
+				// 	 tooltip.enabled = false 即可不启用提示框
+				tooltip: {
+					headerFormat: '<b>{series.name}</b><br>',
+					pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
+				},
+				// 数据配置
+				plotOptions: {
+					spline: {
+						marker: {
+							enabled: true
+						}
+					}
+				},
+				// 	取消highcharts版权显示
+				credits: {
+					enabled:false
+				},
+				series: [{
+					name: null,
+					data: [
+						[Date.UTC(1970,  9, 27), 0   ],
+						[Date.UTC(1970, 10, 10), 0.6 ],
+						[Date.UTC(1970, 10, 18), 0.7 ],
+						[Date.UTC(1970, 11,  2), 0.8 ],
+						[Date.UTC(1970, 11,  9), 0.6 ],
+						[Date.UTC(1970, 11, 16), 0.6 ],
+						[Date.UTC(1970, 11, 28), 0.67],
+						[Date.UTC(1971,  0,  1), 0.81],
+						[Date.UTC(1971,  0,  8), 0.78],
+						[Date.UTC(1971,  0, 12), 0.98],
+						[Date.UTC(1971,  0, 27), 1.84],
+						[Date.UTC(1971,  1, 10), 1.80],
+						[Date.UTC(1971,  1, 18), 1.80],
+						[Date.UTC(1971,  1, 24), 1.92],
+						[Date.UTC(1971,  2,  4), 2.49],
+						[Date.UTC(1971,  2, 11), 2.79],
+						[Date.UTC(1971,  2, 15), 2.73],
+						[Date.UTC(1971,  2, 25), 2.61],
+						[Date.UTC(1971,  3,  2), 2.76],
+						[Date.UTC(1971,  3,  6), 2.82],
+						[Date.UTC(1971,  3, 13), 2.8 ],
+						[Date.UTC(1971,  4,  3), 2.1 ],
+						[Date.UTC(1971,  4, 26), 1.1 ],
+						[Date.UTC(1971,  5,  9), 0.25],
+						[Date.UTC(1971,  5, 12), 0   ]
+					]
+				},{
+					// name:null,
+					data: [
+						[Date.UTC(1970,  9, 18), 0   ],
+						[Date.UTC(1970,  9, 26), 0.2 ],
+						[Date.UTC(1970, 11,  1), 0.47],
+						[Date.UTC(1970, 11, 11), 0.55],
+						[Date.UTC(1970, 11, 25), 1.38],
+						[Date.UTC(1971,  0,  8), 1.38],
+						[Date.UTC(1971,  0, 15), 1.38],
+						[Date.UTC(1971,  1,  1), 1.38],
+						[Date.UTC(1971,  1,  8), 1.48],
+						[Date.UTC(1971,  1, 21), 1.5 ],
+						[Date.UTC(1971,  2, 12), 1.89],
+						[Date.UTC(1971,  2, 25), 2.0 ],
+						[Date.UTC(1971,  3,  4), 1.94],
+						[Date.UTC(1971,  3,  9), 1.91],
+						[Date.UTC(1971,  3, 13), 1.75],
+						[Date.UTC(1971,  3, 19), 1.6 ],
+						[Date.UTC(1971,  4, 25), 0.6 ],
+						[Date.UTC(1971,  4, 31), 0.35],
+						[Date.UTC(1971,  5,  7), 0   ]
+					]
+				}]
+			});
+ 		}
+		function drawUptime(){
+			// 柱状图
+			Highcharts.chart('uptimeContainer', {
+				colors:['#7c30bc'],
+				chart: {
+					type: 'column',
+					margin:[0,0,0,0],
+				},
+				// 版权信息
+				credits:{
+					enabled:false
+				},
+				title: {
+					text: ''
+				},
+				xAxis: {
+					type: 'category',
+					visible:false,
+				},
+				yAxis: {
+					visible:false,
+					title: {
+						text: ''
+					}
+				},
+				// 图例
+				legend: {
+					enabled: false
+				},
+				// 数据配置
+				plotOptions: {
+					series: {
+						borderWidth: 0,
+						dataLabels: {
+							// enabled: true,
+							format: '{point.y:.1f}%'
+						}
+					}
+				},
+				// 数据提示框
+				tooltip: {
+					headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+					pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+				},
+				series: [{
+					name: 'Uptime',
+					colorByPoint: true,
+					data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4,29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6]
+				}]
+			});
+		}
+		function drawSales(){
+			var chart = Highcharts.chart('salesContainer', {
+				// colors:[''],
+				credits:{
+					enabled:false
+				},
+				chart: {
+					margin : [0,0,0,100]
+				},
+				title: {
+					floating:true,
+					text: ''
+				},
+				tooltip: {
+					pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+				},
+				plotOptions: {
+					pie: {
+						allowPointSelect: true,
+						cursor: 'pointer',
+						dataLabels: {
+							enabled: false,
+							format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+							style: {
+								color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+							}
+						},
+					}
+				},
+				series: [{
+					type: 'pie',
+					innerSize: '60%',
+					name: 'sales',
+					data: [
+						['Firefox',45.0],
+						['IE',26.8],
+						['Chrome',12.8],
+						['Safari',8.5],
+						['Opera',6.2],
+						['其他',0.7]
+					]
+				}]
+			});
+		}
+
+		
+	});
+</script>
+<style>
+	.outerDiv{
+		width: 95%;
+		margin: 0 auto;
+	}
+	.bg-white{
+		background-color: white;
+	}
+	.bg-green{
+		background-color: #63b919;
+	}
+	.bg-7E2DBF{
+		background-color: #7E2DBF;
+	}
+	.bg-39BBE4{
+		background-color: #39BBE4;
+	}
+	/*左侧的三行*/
+	.totalDiv{
+		overflow:hidden;
+		padding: 10px;
+		border-radius: 5px;
+		margin-top:10px;
+	}
+	.iconDiv,.totalDiv .numDiv{
+		float: left;
+	}
+	.iconDiv{
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		text-align: center;
+		margin-left: 10px;
+	}
+	.iconDiv i{
+		font-size: 24px;
+		color: white;
+		line-height: 40px;
+	}
+	.totalDiv .numDiv{
+		margin-left: 20px;
+	}
+	.numDiv span{
+		font-size:24px; 
+		line-height: 24px;
+	}
+	.numDiv small{
+		display: block;
+	}
+	.visDiv,.uptimeDiv,.salesDiv{
+		position: relative;
+	}
+	#visContainer{
+		height: 206px;
+		margin-top:10px;
+	}
+	.visDiv .numDiv,.uptimeDiv .numDiv,.salesDiv .numDiv{
+		position: absolute;
+		top:20px;
+		left:20px;
+	}
+	.uptimeDiv .numDiv,.salesDiv .numDiv{
+		top:10px;
+		left: 10px;
+	}
+	.visDiv .numDiv span{
+		color:#63b919;
+	}
+	#uptimeContainer,#salesContainer{
+		height: 98px;
+		margin-top: 10px;
+	}
+	.uptimeDiv span,.salesDiv span{
+		font-size:20px;
+	}
+	.uptimeDiv span{
+		color: #7c30bc;
+	}
+</style>
